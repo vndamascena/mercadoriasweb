@@ -1,0 +1,80 @@
+<div class="container mt-3">
+    <h3>Formulário de cadastro de mercadorias</h3>
+    <p>Preencha os campos para incluir um mercadorias.</p>
+    <div *ngIf="mensagem" class="alert alert-primary alert-dismissible fade show" role="alert">
+        <strong>{{mensagem}}</strong>
+        <button (click)="mensagem = ''" type="button" class="btn-close" aria-label="Close"></button>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <!-- coluna -->
+            <div class="col">
+                <Label>Nome do mercadorias:</Label>
+                <input type="text" class="form-control" placeholder="Digite aqui" formControlName="nome" />
+                <div class="text-danger" *ngIf="f['nome'].touched&& f['nome'].invalid"> Por favor, informe um nome
+                    válido de 8 a 100 caracteres.
+
+                </div>
+
+            </div>
+            <!-- coluna -->
+            <div class="col">
+                <label>Preço:</label>
+                <input type="text" class="form-control" placeholder="Digite aqui" formControlName="preco" />
+                <div class="text-danger" *ngIf="f['preco'].touched&& f['preco'].invalid">Por favor, informe um preço
+                    válido entre 0 e 999999.
+                </div>
+
+            </div>
+            <!-- coluna -->
+            <div class="col">
+                <label>Quantidade:</label>
+                <input type="text" class="form-control" placeholder="Digite aqui" formControlName="quantidade" />
+                <div class="text-danger" *ngIf="f['quantidade'].touched&& f['quantidade'].invalid">
+                    Por favor, informe uma quantidade válida entre 0 e 9999.
+
+                </div>
+
+            </div>
+        </div>
+        <!-- linha -->
+        <div class="row mt-3">
+            <!-- coluna -->
+            <div class="col">
+                <label>Selecione a categoria:</label>
+                <select class="form-select" formControlName="categoriaId">
+                    <option value="">Escolha uma opção</option>
+                    <option *ngFor="let c of categorias" value="{{c.id}}">
+                        {{c.nome | uppercase}}
+                    </option>
+                </select>
+                <div class="text-danger" *ngIf="f['categoriaId'].touched&& f['categoriaId'].invalid">Por favor,
+                    selecione uma categoria para o produto.
+                </div>
+            </div>
+            <!-- coluna -->
+            <div class="col">
+                <label>Selecione o fornecedor:</label>
+                <select class="form-select" formControlName="fornecedorId">
+                    <option value="">Escolha uma opção</option>
+                    <option *ngFor="let f of fornecedores" value="{{f.id}}">
+
+                        {{f.razaoSocial | uppercase}} (CNPJ: {{f.cnpj}})
+                    </option>
+                </select>
+                <div class="text-danger" *ngIf="f['fornecedorId'].touched&& f['fornecedorId'].invalid">
+                    Por favor, selecione um fornecedor para o produto.
+                </div>
+            </div>
+        </div>
+        <!-- linha -->
+        <div class="row mt-3">
+            <!-- coluna -->
+            <div class="col">
+                <button type="submit" class="btn btn-success btn-sm" [disabled]="form.invalid">
+                    Realizar Cadastro
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

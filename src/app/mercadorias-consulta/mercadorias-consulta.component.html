@@ -1,0 +1,54 @@
+<div class="container mt-3">
+  <!-- Título da página -->
+  <h3>Sistema de controle de mercadorias</h3>
+  <p>Projeto desenvolvido em Angular e integrado com API .NET</p>
+
+  <div *ngIf="mensagem" class="alert alert-primary alert-dismissible fade show" role="alert">
+    <strong>{{mensagem}}</strong>
+    <button (click)="mensagem = ''" type="button" class="btn-close" aria-label="Close"></button>
+  </div>
+
+  <!-- Tabela para exibir a consulta de produtos -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Nome do mercadorias</th>
+          <th>Preço</th>
+          <th>Quantidade</th>
+          <th>Total</th>
+          <th>Categoria</th>
+          <th>Fornecedor</th>
+          <th>Operações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of mercadorias">
+          <td>{{m.nome | uppercase}}</td>
+          <td>{{m.preco | currency: 'R$'}}</td>
+          <td>{{m.quantidade}}</td>
+          <td>{{m.preco * m.quantidade | currency: 'R$'}}</td>
+          <td>{{m.categoria.nome | uppercase}}</td>
+          <td>{{m.fornecedor.razaoSocial | uppercase}}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary me-2"
+            [routerLink]="['/mercadorias-edicao', m.id]">
+            Editar
+            </button>
+            <button class="btn btn-sm btn-outline-danger"
+            (click)="onDelete(m.id)">
+            Excluir
+          </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="7">
+            Quantidade: {{mercadorias.length}}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
